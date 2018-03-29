@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.9"
+    ComputedModelVersion    "1.10"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -65,9 +65,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "arekm"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Mar 29 17:37:05 2018"
-  RTWModifiedTimeStamp	  444245790
-  ModelVersionFormat	  "1.%<AutoIncrement:9>"
+  LastModifiedDate	  "Thu Mar 29 17:39:15 2018"
+  RTWModifiedTimeStamp	  444245923
+  ModelVersionFormat	  "1.%<AutoIncrement:10>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -956,7 +956,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "90"
+    SIDHighWatermark	    "92"
     Block {
       BlockType		      Clock
       Name		      "Clock"
@@ -1028,6 +1028,23 @@ Model {
 	  DstPort		  1
 	}
       }
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Open Loop Scope"
+      SID		      "92"
+      Ports		      [1]
+      Position		      [910, 166, 965, 224]
+      ZOrder		      45
+      Floating		      off
+      Location		      [188, 365, 512, 604]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      SaveName		      "ScopeData2"
     }
     Block {
       BlockType		      SubSystem
@@ -1766,17 +1783,27 @@ Model {
       ZOrder		      57
       SrcBlock		      "Phi Sequence"
       SrcPort		      1
-      Points		      [35, 0]
+      Points		      [13, 0]
       Branch {
-	ZOrder			67
-	Points			[0, -35]
-	DstBlock		"Phi Scope"
+	ZOrder			80
+	Points			[0, -100]
+	DstBlock		"Open Loop Model"
 	DstPort			1
       }
       Branch {
-	ZOrder			58
-	DstBlock		"Phi Motor Model"
-	DstPort			1
+	ZOrder			79
+	Points			[22, 0]
+	Branch {
+	  ZOrder		  67
+	  Points		  [0, -35]
+	  DstBlock		  "Phi Scope"
+	  DstPort		  1
+	}
+	Branch {
+	  ZOrder		  58
+	  DstBlock		  "Phi Motor Model"
+	  DstPort		  1
+	}
       }
     }
     Line {
@@ -1819,6 +1846,13 @@ Model {
       SrcPort		      1
       DstBlock		      "VR Sink"
       DstPort		      2
+    }
+    Line {
+      ZOrder		      78
+      SrcBlock		      "Open Loop Model"
+      SrcPort		      1
+      DstBlock		      "Open Loop Scope"
+      DstPort		      1
     }
   }
 }
