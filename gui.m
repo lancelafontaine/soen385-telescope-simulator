@@ -223,14 +223,22 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-function calculate_Callback(hObject, eventdata, handles)
-% hObject    handle to calculate (see GCBO)
+function simulink_Callback(hObject, eventdata, handles)
+% hObject    handle to simulink (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+load('variables.mat');
+assignin('base', 'PHI_P', str2double(get(handles.PID_P_setter, 'String')));
+assignin('base', 'PHI_I', str2double(get(handles.PID_I_setter,  'String')));
+assignin('base', 'PHI_D', str2double(get(handles.PID_D_setter,  'String')));
+assignin('base', 'H_Numerator', str2double(get(handles.H_Numerator_setter, 'String')));
+assignin('base', 'H_Denominator', str2double(get(handles.H_Denominator_setter,  'String')));
+assignin('base', 'G_Numerator', str2double(get(handles.G_Numerator_setter,  'String')));
+assignin('base', 'G_Denominator', str2double(get(handles.G_Denominator_setter,  'String')));
+guidata(hObject, handles)
+open_system('pid_model.mdl')
 
-load('variables.mat')
-
-handles
-
-
-
+function vr_Callback(hObject, eventdata, handles)
+% hObject    handle to vr (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
