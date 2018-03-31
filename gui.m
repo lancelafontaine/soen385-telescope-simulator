@@ -46,13 +46,14 @@ if isfield(handles, 'metricdata') && ~isreset
     return;
 end
 
-handles.metricdata.PID_P = 1;
-handles.metricdata.PID_I = 1;
-handles.metricdata.PID_D = 1;
-handles.metricdata.H_Numerator = 1;
-handles.metricdata.H_Denominator = 1;
-handles.metricdata.G_Numerator = 1;
-handles.metricdata.G_Denominator = 1;
+load('variables.mat');
+handles.metricdata.PID_P = PID_P;
+handles.metricdata.PID_I = PID_I;
+handles.metricdata.PID_D = PID_D;
+handles.metricdata.H_Numerator = mat2str(H_Numerator);
+handles.metricdata.H_Denominator = mat2str(H_Denominator);
+handles.metricdata.G_Numerator = mat2str(G_Numerator);
+handles.metricdata.G_Denominator = mat2str(G_Denominator);
 
 set(handles.PID_P_setter, 'String', handles.metricdata.PID_P);
 set(handles.PID_I_setter,  'String', handles.metricdata.PID_I);
@@ -136,7 +137,7 @@ function H_Numerator_setter_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-H_Numerator = str2double(get(hObject, 'String'));
+H_Numerator = str2mat(get(hObject, 'String'));
 if isnan(H_Numerator)
     set(hObject, 'String', 1);
     errordlg('Input must be a integer','Error');
@@ -159,7 +160,7 @@ function H_Denominator_setter_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-H_Denominator = str2double(get(hObject, 'String'));
+H_Denominator = str2num(get(hObject, 'String'));
 if isnan(H_Denominator)
     set(hObject, 'String', 1);
     errordlg('Input must be a integer','Error');
@@ -182,7 +183,7 @@ function G_Numerator_setter_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-G_Numerator = str2double(get(hObject, 'String'));
+G_Numerator = str2num(get(hObject, 'String'));
 if isnan(G_Numerator)
     set(hObject, 'String', 1);
     errordlg('Input must be a integer','Error');
@@ -205,7 +206,7 @@ function G_Denominator_setter_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-G_Denominator = str2double(get(hObject, 'String'));
+G_Denominator = str2num(get(hObject, 'String'));
 if isnan(G_Denominator)
     set(hObject, 'String', 1);
     errordlg('Input must be a integer','Error');
@@ -228,13 +229,14 @@ function simulink_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 load('variables.mat');
-assignin('base', 'PHI_P', str2double(get(handles.PID_P_setter, 'String')));
-assignin('base', 'PHI_I', str2double(get(handles.PID_I_setter,  'String')));
-assignin('base', 'PHI_D', str2double(get(handles.PID_D_setter,  'String')));
-assignin('base', 'H_Numerator', str2double(get(handles.H_Numerator_setter, 'String')));
-assignin('base', 'H_Denominator', str2double(get(handles.H_Denominator_setter,  'String')));
-assignin('base', 'G_Numerator', str2double(get(handles.G_Numerator_setter,  'String')));
-assignin('base', 'G_Denominator', str2double(get(handles.G_Denominator_setter,  'String')));
+PHI_P = str2double(get(handles.PID_P_setter, 'String'));
+PHI_I = str2double(get(handles.PID_I_setter,  'String'));
+PHI_D = str2double(get(handles.PID_D_setter,  'String'));
+H_Numerator = str2num(get(handles.H_Numerator_setter, 'String'));
+H_Denominator = str2num(get(handles.H_Denominator_setter,  'String'));
+G_Numerator = str2num(get(handles.G_Numerator_setter,  'String'));
+G_Denominator = str2num(get(handles.G_Denominator_setter,  'String'));
+
 guidata(hObject, handles)
 open_system('pid_model.mdl')
 
