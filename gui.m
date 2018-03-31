@@ -46,7 +46,8 @@ if isfield(handles, 'metricdata') && ~isreset
     return;
 end
 
-load('variables.mat');
+evalin ('base', 'load(''variables.mat'')');
+load('variables.mat')
 handles.metricdata.PID_P = PID_P;
 handles.metricdata.PID_I = PID_I;
 handles.metricdata.PID_D = PID_D;
@@ -236,6 +237,14 @@ H_Numerator = str2num(get(handles.H_Numerator_setter, 'String'));
 H_Denominator = str2num(get(handles.H_Denominator_setter,  'String'));
 G_Numerator = str2num(get(handles.G_Numerator_setter,  'String'));
 G_Denominator = str2num(get(handles.G_Denominator_setter,  'String'));
+
+assignin('base', 'PHI_P', PHI_P)
+assignin('base', 'PHI_I', PHI_I)
+assignin('base', 'PHI_D', PHI_D)
+assignin('base', 'H_Numerator', H_Numerator)
+assignin('base', 'H_Denominator', H_Denominator)
+assignin('base', 'G_Numerator', G_Numerator)
+assignin('base', 'G_Denominator', G_Denominator)
 
 guidata(hObject, handles)
 open_system('pid_model.mdl')
