@@ -1,35 +1,9 @@
-function varargout = untitled(varargin)
-% UNTITLED MATLAB code for untitled.fig
-%      UNTITLED, by itself, creates a new UNTITLED or raises the existing
-%      singleton*.
-%
-%      H = UNTITLED returns the handle to a new UNTITLED or the handle to
-%      the existing singleton*.
-%
-%      UNTITLED('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in UNTITLED.M with the given input arguments.
-%
-%      UNTITLED('Property','Value',...) creates a new UNTITLED or raises
-%      the existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before untitled_OpeningFcn gets called.  An
-%      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to untitled_OpeningFcn via varargin.
-%
-%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
-%      instance to run (singleton)".
-%
-% See also: GUIDE, GUIDATA, GUIHANDLES
-
-% Edit the above text to modify the response to help untitled
-
-% Last Modified by GUIDE v2.5 30-Mar-2018 15:49:27
-
-% Begin initialization code - DO NOT EDIT
+function varargout = gui(varargin)
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @untitled_OpeningFcn, ...
-                   'gui_OutputFcn',  @untitled_OutputFcn, ...
+                   'gui_OpeningFcn', @gui_OpeningFcn, ...
+                   'gui_OutputFcn',  @gui_OutputFcn, ...
                    'gui_LayoutFcn',  [] , ...
                    'gui_Callback',   []);
 if nargin && ischar(varargin{1})
@@ -41,10 +15,8 @@ if nargout
 else
     gui_mainfcn(gui_State, varargin{:});
 end
-% End initialization code - DO NOT EDIT
 
-% --- Executes just before untitled is made visible.
-function untitled_OpeningFcn(hObject, eventdata, handles, varargin)
+function gui_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -54,114 +26,18 @@ function untitled_OpeningFcn(hObject, eventdata, handles, varargin)
 % Choose default command line output for untitled
 handles.output = hObject;
 
-% Update handles structure
 guidata(hObject, handles);
-
 initialize_gui(hObject, handles, false);
 
-% UIWAIT makes untitled wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
 
-
-% --- Outputs from this function are returned to the command line.
-function varargout = untitled_OutputFcn(hObject, eventdata, handles)
+function varargout = gui_OutputFcn(hObject, eventdata, handles)
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Get default command line output from handles structure
 varargout{1} = handles.output;
 
-
-% --- Executes during object creation, after setting all properties.
-function PID_P_setter_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to PID_P_setter (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: popupmenu controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-
-function PID_P_setter_Callback(hObject, eventdata, handles)
-% hObject    handle to PID_P_setter (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of PID_P_setter as text
-%        str2double(get(hObject,'String')) returns contents of PID_P_setter as a double
-density = str2double(get(hObject, 'String'));
-if isnan(density)
-    set(hObject, 'String', 0);
-    errordlg('Input must be a number','Error');
-end
-
-% Save the new PID_P_setter value
-handles.metricdata.density = density;
-guidata(hObject,handles)
-
-% --- Executes during object creation, after setting all properties.
-function PID_I_setter_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to PID_I_setter (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: popupmenu controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-
-function PID_I_setter_Callback(hObject, eventdata, handles)
-% hObject    handle to PID_I_setter (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of PID_I_setter as text
-%        str2double(get(hObject,'String')) returns contents of PID_I_setter as a double
-volume = str2double(get(hObject, 'String'));
-if isnan(volume)
-    set(hObject, 'String', 0);
-    errordlg('Input must be a number','Error');
-end
-
-% Save the new PID_I_setter value
-handles.metricdata.volume = volume;
-guidata(hObject,handles)
-
-% --- Executes on button press in calculate.
-function calculate_Callback(hObject, eventdata, handles)
-% hObject    handle to calculate (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-mass = handles.metricdata.density * handles.metricdata.volume;
-set(handles.mass, 'String', mass);
-
-% --- Executes when selected object changed in unitgroup.
-function unitgroup_SelectionChangedFcn(hObject, eventdata, handles)
-% hObject    handle to the selected object in unitgroup 
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-if (hObject == handles.english)
-    set(handles.text4, 'String', 'lb/cu.in');
-    set(handles.text5, 'String', 'cu.in');
-    set(handles.text6, 'String', 'lb');
-else
-    set(handles.text4, 'String', 'kg/cu.m');
-    set(handles.text5, 'String', 'cu.m');
-    set(handles.text6, 'String', 'kg');
-end
-
-% --------------------------------------------------------------------
 function initialize_gui(fig_handle, handles, isreset)
 % If the metricdata field is present and the reset flag is false, it means
 % we are we are just re-initializing a GUI by calling it from the cmd line
@@ -170,41 +46,191 @@ if isfield(handles, 'metricdata') && ~isreset
     return;
 end
 
-handles.metricdata.density = 0;
-handles.metricdata.volume  = 0;
+handles.metricdata.PID_P = 1;
+handles.metricdata.PID_I = 1;
+handles.metricdata.PID_D = 1;
+handles.metricdata.H_Numerator = 1;
+handles.metricdata.H_Denominator = 1;
+handles.metricdata.G_Numerator = 1;
+handles.metricdata.G_Denominator = 1;
 
-set(handles.PID_P_setter, 'String', handles.metricdata.density);
-set(handles.PID_I_setter,  'String', handles.metricdata.volume);
-set(handles.mass, 'String', 0);
+set(handles.PID_P_setter, 'String', handles.metricdata.PID_P);
+set(handles.PID_I_setter,  'String', handles.metricdata.PID_I);
+set(handles.PID_D_setter,  'String', handles.metricdata.PID_D);
+set(handles.H_Numerator_setter, 'String', handles.metricdata.H_Numerator);
+set(handles.H_Denominator_setter,  'String', handles.metricdata.H_Denominator);
+set(handles.G_Numerator_setter,  'String', handles.metricdata.G_Numerator);
+set(handles.G_Denominator_setter,  'String', handles.metricdata.G_Denominator);
 
-set(handles.unitgroup, 'SelectedObject', handles.english);
+function PID_P_setter_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to PID_P_setter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
 
-set(handles.text4, 'String', 'lb/cu.in');
-set(handles.text5, 'String', 'cu.in');
-set(handles.text6, 'String', 'lb');
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
 
-% Update handles structure
-guidata(handles.figure1, handles);
+function PID_P_setter_Callback(hObject, eventdata, handles)
+% hObject    handle to PID_P_setter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
+PID_P = str2double(get(hObject, 'String'));
+if isnan(PID_P)
+    set(hObject, 'String', 1);
+    errordlg('Input must be a integer','Error');
+end
 
+handles.metricdata.PID_P = PID_P;
+guidata(hObject,handles)
+
+function PID_I_setter_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to PID_I_setter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+function PID_I_setter_Callback(hObject, eventdata, handles)
+% hObject    handle to PID_I_setter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+PID_I = str2double(get(hObject, 'String'));
+if isnan(PID_I)
+    set(hObject, 'String', 1);
+    errordlg('Input must be a integer','Error');
+end
+
+handles.metricdata.PID_I = PID_I;
+guidata(hObject,handles)
 
 function PID_D_setter_Callback(hObject, eventdata, handles)
 % hObject    handle to PID_D_setter (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of PID_D_setter as text
-%        str2double(get(hObject,'String')) returns contents of PID_D_setter as a double
+PID_D = str2double(get(hObject, 'String'));
+if isnan(PID_D)
+    set(hObject, 'String', 1);
+    errordlg('Input must be a integer','Error');
+end
 
+handles.metricdata.PID_D = PID_D;
+guidata(hObject,handles)
 
-% --- Executes during object creation, after setting all properties.
 function PID_D_setter_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to PID_D_setter (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+function H_Numerator_setter_Callback(hObject, eventdata, handles)
+% hObject    handle to H_Numerator_setter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+H_Numerator = str2double(get(hObject, 'String'));
+if isnan(H_Numerator)
+    set(hObject, 'String', 1);
+    errordlg('Input must be a integer','Error');
+end
+
+handles.metricdata.H_Numerator = H_Numerator;
+guidata(hObject,handles)
+
+function H_Numerator_setter_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to H_Numerator_setter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+function H_Denominator_setter_Callback(hObject, eventdata, handles)
+% hObject    handle to H_Denominator_setter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+H_Denominator = str2double(get(hObject, 'String'));
+if isnan(H_Denominator)
+    set(hObject, 'String', 1);
+    errordlg('Input must be a integer','Error');
+end
+
+handles.metricdata.H_Numerator = H_Denominator;
+guidata(hObject,handles)
+
+function H_Denominator_setter_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to H_Denominator_setter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+function G_Numerator_setter_Callback(hObject, eventdata, handles)
+% hObject    handle to G_Numerator_setter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+G_Numerator = str2double(get(hObject, 'String'));
+if isnan(G_Numerator)
+    set(hObject, 'String', 1);
+    errordlg('Input must be a integer','Error');
+end
+
+handles.metricdata.H_Numerator = G_Numerator;
+guidata(hObject,handles)
+
+function G_Numerator_setter_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to G_Numerator_setter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+function G_Denominator_setter_Callback(hObject, eventdata, handles)
+% hObject    handle to G_Denominator_setter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+G_Denominator = str2double(get(hObject, 'String'));
+if isnan(G_Denominator)
+    set(hObject, 'String', 1);
+    errordlg('Input must be a integer','Error');
+end
+
+handles.metricdata.H_Numerator = G_Denominator;
+guidata(hObject,handles)
+
+function G_Denominator_setter_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to G_Denominator_setter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+function calculate_Callback(hObject, eventdata, handles)
+% hObject    handle to calculate (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+load('variables.mat')
+
+handles
+
+
+
