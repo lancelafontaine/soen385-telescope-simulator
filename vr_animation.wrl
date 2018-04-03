@@ -576,11 +576,11 @@ DEF Telescope Transform {
   }
 }
 DEF Earth Transform {
-  scale 3 3 3
+  scale 2 2 2
   children Shape {
     appearance Appearance {
       texture ImageTexture {
-        url "vr_scope_files/objects/Textures/Space/Earth_1024x512.jpg" 
+        url "*sl3dlib/objects/Textures/Space/Earth_1024x512.jpg" 
       }
     }
     geometry IndexedFaceSet {
