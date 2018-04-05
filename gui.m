@@ -248,8 +248,3 @@ assignin('base', 'G_Denominator', G_Denominator)
 
 guidata(hObject, handles)
 open_system('pid_model.mdl')
-
-function vr_Callback(hObject, eventdata, handles)
-% hObject    handle to vr (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
