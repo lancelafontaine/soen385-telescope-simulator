@@ -1,12 +1,8 @@
-# soen385-telescope-simulator
+# SOEN 385 - Space Telescope Control System
 
-## Running instructions
+## Running Instructions
 
-1. Load up the variables in variables.mat
-2. Open up model.slx
-3. Load input data: <code>inputs = fscanf(fopen('Datafile_StarLocationsForTelescopProject.txt', 'r'), '%d %d %d', [3 Inf]);</code>
-4. Run the simulation
-
+In MATLAB, run the GUI by navigating to `gui.m` and clicking "Run"
 
 # Part 1
 
