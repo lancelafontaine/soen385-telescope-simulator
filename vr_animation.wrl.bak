@@ -4061,8 +4061,8 @@ DEF Earth Transform {
 }
 Group {
   children DEF Scope Transform {
-    scale 0.1 0.1 0.1
-    center 0 0 6
+    scale 0.2 0.2 0.2
+    center 0 0 8
     children Transform {
       children [
         Transform {
