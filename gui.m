@@ -230,17 +230,17 @@ function simulink_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 load('variables.mat');
-PHI_P = str2double(get(handles.PID_P_setter, 'String'));
-PHI_I = str2double(get(handles.PID_I_setter,  'String'));
-PHI_D = str2double(get(handles.PID_D_setter,  'String'));
+PID_P = str2double(get(handles.PID_P_setter, 'String'));
+PID_I = str2double(get(handles.PID_I_setter,  'String'));
+PID_D = str2double(get(handles.PID_D_setter,  'String'));
 H_Numerator = str2num(get(handles.H_Numerator_setter, 'String'));
 H_Denominator = str2num(get(handles.H_Denominator_setter,  'String'));
 G_Numerator = str2num(get(handles.G_Numerator_setter,  'String'));
 G_Denominator = str2num(get(handles.G_Denominator_setter,  'String'));
 
-assignin('base', 'PHI_P', PHI_P)
-assignin('base', 'PHI_I', PHI_I)
-assignin('base', 'PHI_D', PHI_D)
+assignin('base', 'PID_P', PID_P)
+assignin('base', 'PID_I', PID_I)
+assignin('base', 'PID_D', PID_D)
 assignin('base', 'H_Numerator', H_Numerator)
 assignin('base', 'H_Denominator', H_Denominator)
 assignin('base', 'G_Numerator', G_Numerator)
@@ -248,3 +248,48 @@ assignin('base', 'G_Denominator', G_Denominator)
 
 guidata(hObject, handles)
 open_system('pid_model.mdl')
+
+
+% --- Executes on button press in part1.
+function part1_Callback(hObject, eventdata, handles)
+% hObject    handle to part1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+set(handles.PID_P_setter, 'String', 17500);
+set(handles.PID_I_setter, 'String', 0);
+set(handles.PID_D_setter, 'String', 1000);
+set(handles.H_Numerator_setter, 'String', 1);
+set(handles.H_Denominator_setter, 'String', 1);
+set(handles.G_Numerator_setter, 'String', 1);
+set(handles.G_Denominator_setter, 'String', '[1 -4 3]');
+
+% --- Executes on button press in part2.
+function part2_Callback(hObject, eventdata, handles)
+% hObject    handle to part2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+set(handles.PID_P_setter, 'String', 1000);
+set(handles.PID_I_setter, 'String', 0);
+set(handles.PID_D_setter, 'String', 800);
+set(handles.H_Numerator_setter, 'String', '0.1');
+set(handles.H_Denominator_setter, 'String', 1);
+set(handles.G_Numerator_setter, 'String', 1);
+set(handles.G_Denominator_setter, 'String', '[1 -2 -3]');
+
+
+
+% --- Executes on button press in part3.
+function part3_Callback(hObject, eventdata, handles)
+% hObject    handle to part3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+set(handles.PID_P_setter, 'String', 1969);
+set(handles.PID_I_setter, 'String', 0);
+set(handles.PID_D_setter, 'String', 1500);
+set(handles.H_Numerator_setter, 'String', '0.1');
+set(handles.H_Denominator_setter, 'String', '[1 1]');
+set(handles.G_Numerator_setter, 'String', 1);
+set(handles.G_Denominator_setter, 'String', '[1 -3]');
+
+
+
